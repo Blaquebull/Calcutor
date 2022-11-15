@@ -26,3 +26,7 @@ function clear(){
 function backspace(){
     
 }
+//Operation function that calls the other functions
+function operate(num1,num2,operator){
+return operator(num1,num2);
+}
