@@ -30,3 +30,12 @@ function backspace(){
 function operate(num1,num2,operator){
 return operator(num1,num2);
 }
+//add display and store numeric clicks
+    const display =document.querySelector(".display");
+    const button = Array.from(document.querySelectorAll(".num"));
+    button.forEach((btn)=>btn.addEventListener("click",e=>{
+        display.textContent+=e.target.textContent;
+        const num1 = +display.textContent;
+        console.log(num1);
+    })
+    );

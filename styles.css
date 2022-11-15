@@ -1,8 +1,8 @@
 *{
-    background-color: #d8704b;
+    background-color: #f19371;
     height: 100vh;
     box-sizing: border-box;
-    color: #7c7876;
+    color: #e6dcd7;
 }
 span{
     display:inline-block;
@@ -39,7 +39,6 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
     justify-content: right;
     flex :3 1 0;
     background-color: #353335;
-
 }
 .center-buttons{
     padding: 10px;
@@ -48,7 +47,6 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
     flex-flow: row wrap;
     gap: 15px;
     background-color: #353335;
-    
 }
 .bottom-buttons{
     display: flex;
@@ -66,7 +64,7 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
     width: 20%;
     height: 20%;
     background-color:#353335;
-    box-shadow: 5px 5px 5px 5px #504e50;
+    box-shadow: 5px 5px 15px 2px #504e50;
 }
 .bottom-buttons>.btn{
     height: 50px;
