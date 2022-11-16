@@ -34,11 +34,12 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
     font-size: 50px;
     padding: 5px;
     border-radius: 15px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: right;
     flex :3 1 0;
     background-color: #353335;
+    display: flex;
+    justify-content:space-between;
+    flex-direction: column;
+    align-items: flex-end;
 }
 .center-buttons{
     padding: 10px;
@@ -75,4 +76,13 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
 }
 .operate{
     color:#f5692b ;
+}
+.display-top,.display-bottom{
+    text-overflow:wrap;
+    display: flex;
+    justify-content: right;
+    flex-flow: row wrap;
+    height: 50%;
+    width: 80%;
+    background-color: #353335;
 }
