@@ -85,4 +85,8 @@ body,.calculator-body,.container,.center-buttons,.bottom-buttons,.btn ,.divide,s
     height: 50%;
     width: 80%;
     background-color: #353335;
+    font-size: 70%;
+}
+.display-bottom{
+font-size: 90%;
 }

@@ -1,9 +1,9 @@
 
 //add display and store numeric clicks
     const storage={
-        toDo :()=>{},
-        numberClicked:"0",
-        numberStored:"0",
+        toDo :()=>{return add(+storage.numberClicked,+storage.numberStored)},
+        numberClicked:0,
+        numberStored:0,
     };
     let numberClicked="";
     let displayString=[];
@@ -17,8 +17,9 @@
         storage.numberClicked =e.target.textContent;
      answer = operate(+storage.numberStored , +storage.numberClicked, storage.toDo);
     storage.numberStored=answer;
-    display.textContent=answer;
+    display.textContent=storage.numberStored;
     displayTop.textContent=displayString.join("");
+    console.log(storage);
     })
     );
 //<--------------------------------------------------------->
@@ -35,20 +36,20 @@ plus.addEventListener("click",e=>{
     storage.toDo = add;
     storage.numberClicked=""
     displayString.push("+")
-    console.log(displayString.join(""));
     display.textContent = e.target.textContent;
-    console.log(storage);
 })
 //subtraction button
 const minus =document.querySelector(".minus");
 minus.addEventListener("click",e=>{
-    display.textContent+= e.target.textContent;
+    display.textContent= e.target.textContent;
     numberClicked=""
     if(!(storage.numberStored)){
         storage.numberStored=storage.numberClicked;
     }
     storage.toDo = subtract;
-    console.log(storage);
+    storage.numberClicked=""
+    displayString.push("-")
+    display.textContent = e.target.textContent;
 })
 //multipliction button
 const times =document.querySelector(".multiply");
@@ -59,7 +60,9 @@ times.addEventListener("click",e=>{
         storage.numberStored=storage.numberClicked;
     }
     storage.toDo = multiply;
-    console.log(storage);
+    storage.numberClicked=""
+    displayString.push("x")
+    display.textContent = e.target.textContent;
 })
 //division button
 const over =document.querySelector(".divide");
@@ -70,7 +73,9 @@ over.addEventListener("click",e=>{
         storage.numberStored=storage.numberClicked;
     }
     storage.toDo = divide;
-    console.log(storage);
+    storage.numberClicked=""
+    displayString.push(`\u00f7`);
+    display.textContent = e.target.textContent;
 })
 //percentage button
 const percent =document.querySelector(".percent");
@@ -87,11 +92,7 @@ clear.addEventListener("click",cleanSlate);
 //Equal to button
 const equalTo =document.querySelector(".Equal");
 equalTo.addEventListener("click",()=>{
-    let answer = operate(+storage.numberStored , +storage.numberClicked, storage.toDo);
-    display.textContent = answer;
-    numberClicked="";
-    storage.numberStored =answer.toString();
-    console.log(storage);
+    display.textContent = storage.numberStored;   
 })
 
 //basic function for button click 
@@ -125,7 +126,8 @@ function percentage(num){
             delete storage[prop];
         }
         storage.numberClicked="0";
-        storage.numberStored="0"
+        storage.numberStored="0";
+        storage.toDo=()=>{};
     }
 //Operation function that calls the other functions
 const operate = function(num1,num2,operator){
