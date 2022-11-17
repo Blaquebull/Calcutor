@@ -1,135 +1,154 @@
+let topDisplayArray=[];
+let answer=0;
+const storage = {
+    numberStored:[0,0],
+    numberNew:[0,0],
+    toDow:(n)=>{return n*1},
+}
+let textStored='';
+const topDisplay =document.querySelector(".display-top");
+const bottomDisplay=document.querySelector(".display-bottom");
+bottomDisplay.textContent="";
+numbers=Array.from(document.querySelectorAll(".num"));
+operationsButtons =Array.from(document.querySelectorAll(".op"));
+//Add click events and action to numeric buttons
+//--------------------------------------------------------------------------------------------------
 
-//add display and store numeric clicks
-    const storage={
-        toDo :()=>{return add(+storage.numberClicked,+storage.numberStored)},
-        numberClicked:0,
-        numberStored:0,
-    };
-    let numberClicked="";
-    let displayString=[];
-    let answer =0;
-    const display =document.querySelector(".display-bottom");
-    const displayTop =document.querySelector(".display-top");
-
-    const numberButton = Array.from(document.querySelectorAll(".num"));
-    numberButton.forEach((btn)=>btn.addEventListener("click",e=>{
-        displayString.push(e.target.textContent);
-        storage.numberClicked =e.target.textContent;
-     answer = operate(+storage.numberStored , +storage.numberClicked, storage.toDo);
-    storage.numberStored=answer;
-    display.textContent=storage.numberStored;
-    displayTop.textContent=displayString.join("");
-    console.log(storage);
+numbers.forEach(number => {
+    number.addEventListener("click",e=>{
+        textStored += e.target.textContent;
+        bottomDisplay.textContent=""
+        storage.numberStored[0]=textStored;
+         answer=operate(+storage.numberStored[0],+storage.numberNew[1],storage.toDow)
+         bottomDisplay.textContent=textStored;
+        topDisplayArray.push(e.target.textContent);
+        topDisplay.textContent =topDisplayArray.join("");
+        console.log(storage);
     })
-    );
-//<--------------------------------------------------------->
-//add function buttons 
-//------------------------------------------------------------
-//addition button
-const plus =document.querySelector(".plus");
-plus.addEventListener("click",e=>{
-    //display.textContent= e.target.textContent;
-    numberClicked=""
-    if(!(storage.numberStored)){
-        storage.numberStored=storage.numberClicked;
+    
+ });
+ //operations buttons
+//--------------------------------------------------------------------------------------------------
+operationsButtons.forEach(btn=>{
+    btn.addEventListener("click",e=>{
+        switch(true){
+            case e.target.textContent === "+":
+                textStored="";
+                storage.numberNew[1]=answer;
+                storage.toDow = add;
+                topDisplayArray.push(e.target.textContent);
+                topDisplay.textContent =topDisplayArray.join("");
+                bottomDisplay.textContent="";
+                bottomDisplay.textContent=answer;
+                console.log(storage);
+            break;
+
+            case e.target.textContent === "-":
+                textStored="";
+                storage.numberNew[1]=answer;
+                storage.toDow = subtract;
+                topDisplayArray.push(e.target.textContent);
+                topDisplay.textContent =topDisplayArray.join("");
+                bottomDisplay.textContent=""
+                bottomDisplay.textContent=answer;
+            break;
+            
+            case e.target.textContent === "\u00F7":
+                textStored="";
+                storage.numberNew[1]=answer;;
+                storage.toDow = divide;
+                topDisplayArray.push(e.target.textContent);
+                topDisplay.textContent =topDisplayArray.join("");
+                bottomDisplay.textContent=""
+                bottomDisplay.textContent=answer;
+            break;
+
+            case e.target.textContent === "x":
+                textStored="";
+                storage.numberNew[1]=answer;
+                storage.toDow = multiply;
+                topDisplayArray.push(e.target.textContent);
+                topDisplay.textContent =topDisplayArray.join("");
+                bottomDisplay.textContent=""
+                bottomDisplay.textContent=answer;
+            break;
     }
-    storage.toDo = add;
-    storage.numberClicked=""
-    displayString.push("+")
-    display.textContent = e.target.textContent;
+    })
 })
-//subtraction button
-const minus =document.querySelector(".minus");
-minus.addEventListener("click",e=>{
-    display.textContent= e.target.textContent;
-    numberClicked=""
-    if(!(storage.numberStored)){
-        storage.numberStored=storage.numberClicked;
-    }
-    storage.toDo = subtract;
-    storage.numberClicked=""
-    displayString.push("-")
-    display.textContent = e.target.textContent;
+//--------------------------------------------------------------------------------------------------
+//equal to button
+//--------------------------------------------------------------------------------------------------
+const equalTo = document.querySelector(".Equal");
+equalTo.addEventListener("click",()=>{
+    answer=operate(+storage.numberStored[0],+storage.numberNew[1],storage.toDow);
+    bottomDisplay.textContent="";
+    bottomDisplay.textContent=answer;
 })
-//multipliction button
-const times =document.querySelector(".multiply");
-times.addEventListener("click",e=>{
-    display.textContent+= e.target.textContent;
-    numberClicked=""
-    if(!(storage.numberStored)){
-        storage.numberStored=storage.numberClicked;
-    }
-    storage.toDo = multiply;
-    storage.numberClicked=""
-    displayString.push("x")
-    display.textContent = e.target.textContent;
-})
-//division button
-const over =document.querySelector(".divide");
-over.addEventListener("click",e=>{
-    display.textContent+= e.target.textContent;
-    numberClicked=""
-    if(!(storage.numberStored)){
-        storage.numberStored=storage.numberClicked;
-    }
-    storage.toDo = divide;
-    storage.numberClicked=""
-    displayString.push(`\u00f7`);
-    display.textContent = e.target.textContent;
-})
+//---------------------------------------------------------------------------------------------------
+//clear button
+//---------------------------------------------------------------------------------------------------
+const clearBtn =document.querySelector(".clear");
+clearBtn.addEventListener("click",()=>{
+     topDisplayArray=[];
+     answer=0;
+    storage.numberStored=[0,0];
+    storage.numberNew=[0,0];
+    storage.toDow=(n)=>{return n*1};
+topDisplay.textContent="";
+bottomDisplay.textContent="";
+});
+
+//-------------------------------------------------------------------------------------------------------
 //percentage button
-const percent =document.querySelector(".percent");
-percent.addEventListener("click",e=>{
-    display.textContent+= e.target.textContent;
-    numberClicked=""
-    storage.numberStored = storage.numberClicked;
-    storage.numberClicked=(storage.numberClicked)/100;
+//-----------------------------------------------------------------------------------------------------
+const percentBtn =document.querySelector(".percent");
+percentBtn.addEventListener("click",e=>{
+    storage.numberStored[0]=percentage(storage.numberStored[0]);
+    topDisplayArray.push(e.target.textContent);
+    topDisplay.textContent =topDisplayArray.join("");
+    answer=operate(+storage.numberStored[0],+storage.numberNew[1],storage.toDow);
+    bottomDisplay.textContent="";
+    bottomDisplay.textContent=answer;
     console.log(storage);
 })
-//clear button
-const clear =document.querySelector(".clear");
-clear.addEventListener("click",cleanSlate);
-//Equal to button
-const equalTo =document.querySelector(".Equal");
-equalTo.addEventListener("click",()=>{
-    display.textContent = storage.numberStored;   
-})
+//------------------------------------------------------------------------------------------------------
+//backspace button;
+//-------------------------------------------------------------------------------------------------------
+const backspaceBtn =document.querySelector(".back");
+backspaceBtn.addEventListener("click",e=>{
+    topDisplay.textContent =topDisplayArray.join("");
+    bottomDisplay.textContent="";
+    answer=0;
+    storage.numberStored=[0,0];
+    storage.toDow=(n)=>{return n*1};
 
-//basic function for button click 
-const add =function(num1,num2){
+});
+
+
+//-------------------------------------------------------------------------------------------------------
+
+
+const add =function(num1=0,num2=0){
     return num1 + num2;
     }
     
-const subtract =function(num1,num2){
-        return num1 - num2; 
+const subtract =function(num1=0,num2=0){
+        return num2 - num1; 
     }
     
-const divide =function(num1,num2){
-        return num1 / num2;  
+const divide =function(num1=1,num2=1){
+        return num2 / num1;  
     }
     
-const multiply =function(num1,num2){
+const multiply =function(num1=1,num2=1){
         return num1 * num2; 
     }
     
-function percentage(num){
+function percentage(num=0){
         return num/100;   
     }
-    
-//clear function
- function cleanSlate(){
-        answer=0;
-        display.textContent= "";
-        displayTop.textContent="";
-        displayString.length =0;
-        for(let prop in storage){
-            delete storage[prop];
-        }
-        storage.numberClicked="0";
-        storage.numberStored="0";
-        storage.toDo=()=>{};
-    }
 //Operation function that calls the other functions
-const operate = function(num1,num2,operator){
+const operate = function(num1,num2,operator =()=>{return null;}){
+    
     return operator(num1,num2);
     }
